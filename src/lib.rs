@@ -35,6 +35,7 @@ impl<S: Controller> App<S> {
             builder.title.unwrap_or("Piston app".to_string()),
             builder.size,
         ).opengl(opengl)
+            .srgb(builder.srgb)
             .build()?;
 
         let gl = GlGraphics::new(opengl);
@@ -75,6 +76,7 @@ pub struct AppBuilder<S: Controller> {
     title: Option<String>,
     ups: Option<u64>,
     fps: Option<u64>,
+    srgb: bool,
 }
 
 impl<S: Controller> AppBuilder<S> {
@@ -85,6 +87,7 @@ impl<S: Controller> AppBuilder<S> {
             title: None,
             ups: None,
             fps: None,
+            srgb: true,
         }
     }
 
@@ -100,6 +103,11 @@ impl<S: Controller> AppBuilder<S> {
 
     pub fn fps(mut self, fps: u64) -> Self {
         self.fps = Some(fps);
+        self
+    }
+
+    pub fn srgb(mut self, srgb: bool) -> Self {
+        self.srgb = srgb;
         self
     }
 
